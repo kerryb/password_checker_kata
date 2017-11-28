@@ -18,6 +18,10 @@ defmodule PasswordCheckerTest do
     check_has_error("abcdefghi", "must contain at least one uppercase letter")
   end
 
+  test "password must have at least one lowercase letter" do
+    check_has_error("ABCDEFGHI", "must contain at least one lowercase letter")
+  end
+
   defp check_has_error(password, message) do
     result = PasswordChecker.check(password)
     assert Enum.find(result, & &1 == message),
