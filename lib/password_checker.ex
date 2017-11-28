@@ -4,7 +4,7 @@ defmodule PasswordChecker do
   slightly).
   """
 
-  def check(nil), do: ["must not be nil"]
+  def check(nil), do: ["not be nil"]
   def check(password) do
     Enum.reduce(checks(),
                 [],
@@ -31,7 +31,7 @@ defmodule PasswordChecker do
     if String.length(password) > 8 do
       :ok
     else
-      {:error, "must be longer than eight characters"}
+      {:error, "be longer than eight characters"}
     end
   end
 
@@ -39,7 +39,7 @@ defmodule PasswordChecker do
     if password =~ ~r/[A-Z]/ do
       :ok
     else
-      {:error, "must contain at least one uppercase letter"}
+      {:error, "contain at least one uppercase letter"}
     end
   end
 
@@ -47,7 +47,7 @@ defmodule PasswordChecker do
     if password =~ ~r/[a-z]/ do
       :ok
     else
-      {:error, "must contain at least one lowercase letter"}
+      {:error, "contain at least one lowercase letter"}
     end
   end
 
@@ -55,7 +55,7 @@ defmodule PasswordChecker do
     if password =~ ~r/\d/ do
       :ok
     else
-      {:error, "must contain at least one number"}
+      {:error, "contain at least one number"}
     end
   end
 end
