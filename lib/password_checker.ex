@@ -10,6 +10,7 @@ defmodule PasswordChecker do
       String.length(password) <= 8 -> ["must be longer than eight characters"]
       ! (password =~ ~r/[A-Z]/) -> ["must contain at least one uppercase letter"]
       ! (password =~ ~r/[a-z]/) -> ["must contain at least one lowercase letter"]
+      ! (password =~ ~r/\d/) -> ["must contain at least one number"]
       true -> []
     end
   end

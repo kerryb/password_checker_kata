@@ -3,7 +3,7 @@ defmodule PasswordCheckerTest do
   doctest PasswordChecker
 
   test "a valid password is valid" do
-    assert PasswordChecker.check("Abcdefghi") == []
+    assert PasswordChecker.check("Abcdefgh9") == []
   end
 
   test "password must be longer than eight characters" do
@@ -20,6 +20,10 @@ defmodule PasswordCheckerTest do
 
   test "password must have at least one lowercase letter" do
     check_has_error("ABCDEFGHI", "must contain at least one lowercase letter")
+  end
+
+  test "password must have at least one number" do
+    check_has_error("Abcdefghi", "must contain at least one number")
   end
 
   defp check_has_error(password, message) do
