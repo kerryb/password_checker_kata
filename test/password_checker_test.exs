@@ -26,6 +26,15 @@ defmodule PasswordCheckerTest do
     check_has_error("Abcdefghi", "must contain at least one number")
   end
 
+  test "when multiple conditions are not met, all messages are returned" do
+    result = PasswordChecker.check("abc")
+    assert Enum.sort(result) == [
+      "must be longer than eight characters",
+      "must contain at least one number",
+      "must contain at least one uppercase letter",
+    ]
+  end
+
   defp check_has_error(password, message) do
     result = PasswordChecker.check(password)
     assert Enum.find(result, & &1 == message),
