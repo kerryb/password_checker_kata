@@ -6,9 +6,10 @@ defmodule PasswordChecker do
 
   def check(nil), do: ["not be nil"]
   def check(password) do
-    Enum.reduce(checks(),
-                [],
-                fn rule, errors -> run_check rule, password, errors end)
+    errors = Enum.reduce(checks(),
+                         [],
+                         fn rule, errors -> run_check rule, password, errors end)
+    if length(errors) == 1, do: [], else: errors
   end
 
   defp checks do
