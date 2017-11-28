@@ -6,10 +6,9 @@ defmodule PasswordChecker do
 
   def check(nil), do: ["not be nil"]
   def check(password) do
-    errors = Enum.reduce(checks(),
-                         [],
-                         fn rule, errors -> run_check rule, password, errors end)
-    if length(errors) == 1, do: [], else: errors
+    checks()
+    |> Enum.map(fn check -> check.(password) end)
+    |> report_status
   end
 
   defp checks do
@@ -21,10 +20,13 @@ defmodule PasswordChecker do
     ]
   end
 
-  defp run_check(rule, password, errors) do
-    case rule.(password) do
-      :ok -> errors
-      {:error, message} -> [message | errors]
+  defp report_status(results) do
+    if results |> Enum.count(fn r -> match? :ok, r end) >= 3 do
+      []
+    else
+      results
+      |> Enum.filter(fn r -> match? {:error, _}, r end)
+      |> Enum.map(fn {_, message} -> message end)
     end
   end
 
