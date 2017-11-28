@@ -21,13 +21,19 @@ defmodule PasswordChecker do
   end
 
   defp report_status(results) do
-    if results |> Enum.count(fn r -> match? :ok, r end) >= 3 do
+    if acceptable? results do
       []
     else
       results
-      |> Enum.filter(fn r -> match? {:error, _}, r end)
+      |> Enum.reject(fn r -> r == :ok end)
       |> Enum.map(fn {_, message} -> message end)
     end
+  end
+
+  defp acceptable?(results) do
+    passes = results |> Enum.count(fn r -> r == :ok end)
+    fatal_errors = results |> Enum.count(fn r -> match? {:fatal, _}, r end)
+    fatal_errors == 0 && passes >= 3
   end
 
   defp longer_than_eight_characters(password) do
@@ -50,7 +56,7 @@ defmodule PasswordChecker do
     if password =~ ~r/[a-z]/ do
       :ok
     else
-      {:error, "contain at least one lowercase letter"}
+      {:fatal, "contain at least one lowercase letter"}
     end
   end
 

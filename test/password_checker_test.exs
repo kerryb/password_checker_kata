@@ -39,6 +39,10 @@ defmodule PasswordCheckerTest do
     assert PasswordChecker.check("aB3") == []
   end
 
+  test "password is never valid unless it has a lowercase letter" do
+    refute PasswordChecker.check("ABCDEFGH9") == []
+  end
+
   defp check_has_error(password, message) do
     result = PasswordChecker.check(password)
     assert Enum.find(result, & &1 == message),
