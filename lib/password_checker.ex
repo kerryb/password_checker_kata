@@ -4,6 +4,7 @@ defmodule PasswordChecker do
   slightly).
   """
 
+  def check(nil), do: ["must not be nil"]
   def check(password) do
     if String.length(password) > 8 do
       []
